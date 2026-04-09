@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Karabo Mohodi — Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Familjen+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bone:#f0ead8;--parch:#e4dbc6;--warm:#cbbfa8;
+  --rust:#9c5a2d;--ember:#c47a3a;--ink:#1a1208;
+  --ash:#3d3020;--ghost:#b3a690;--line:#d4c9b0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bone);color:var(--ink);font-family:'Familjen Grotesk',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1.6rem 4vw;background:rgba(240,234,216,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-mark{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.12em;color:var(--ink);}
+.nav-right{display:flex;align-items:center;gap:2.5rem;}
+.nav-right a{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color .2s;}
+.nav-right a:hover{color:var(--rust);}
+.nav-cta{background:var(--ink)!important;color:var(--bone)!important;padding:.55rem 1.4rem;}
+.nav-cta:hover{background:var(--rust)!important;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4vw 4rem;position:relative;overflow:hidden;background:var(--bone);border-bottom:1px solid var(--line);}
+.hero-num{position:absolute;top:50%;right:2vw;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(18rem,32vw,38rem);line-height:1;color:transparent;-webkit-text-stroke:1px var(--line);pointer-events:none;user-select:none;}
+.hero-top{padding-top:9rem;position:relative;z-index:1;}
+.hero-kicker{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;}
+.hero-kicker-line{width:48px;height:1px;background:var(--rust);}
+.hero-kicker span{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,14vw,17rem);line-height:.88;letter-spacing:.02em;color:var(--ink);}
+.hero-title .line2{color:transparent;-webkit-text-stroke:2px var(--ink);}
+.hero-title .line3{color:var(--rust);}
+.hero-bottom{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:end;position:relative;z-index:2;margin-top:3rem;}
+.hero-desc{font-size:1rem;line-height:1.7;color:var(--ash);max-width:440px;}
+.hero-desc strong{color:var(--ink);font-weight:700;}
+.hero-meta{display:flex;flex-direction:column;align-items:flex-end;gap:1.5rem;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;}
+.hero-tag{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);color:var(--ghost);padding:.3rem .8rem;}
+.hero-btns{display:flex;gap:1rem;}
+.btn-fill{background:var(--ink);color:var(--bone);padding:.85rem 2rem;font-family:'Familjen Grotesk',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .2s;display:inline-block;}
+.btn-fill:hover{background:var(--rust);}
+.btn-stroke{border:1px solid var(--ink);color:var(--ink);padding:.85rem 2rem;font-family:'Familjen Grotesk',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s;display:inline-block;}
+.btn-stroke:hover{background:var(--ink);color:var(--bone);}
+
+
+/* CLIENT STRIP */
+.clients{background:var(--parch);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:2.5rem 4vw;}
+.clients-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ghost);text-align:center;margin-bottom:2rem;}
+.clients-row{display:flex;align-items:center;justify-content:center;gap:4rem;flex-wrap:wrap;}
+.client-logo{display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.45;transition:opacity .2s;filter:sepia(1);}
+.client-logo:hover{opacity:.85;}
+.client-logo-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.18em;color:var(--ink);}
+.client-logo-sub{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ghost);}
+
+/* TICKER */
+.ticker{background:var(--ink);padding:.9rem 0;overflow:hidden;}
+.ticker-track{display:flex;animation:ticker 22s linear infinite;white-space:nowrap;}
+.ticker-item{display:inline-flex;align-items:center;gap:1.2rem;padding:0 2.5rem;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.18em;color:var(--warm);}
+.ticker-sep{color:var(--rust);}
+
+/* SECTIONS */
+section{padding:8rem 4vw;border-top:1px solid var(--line);position:relative;overflow:hidden;}
+.s-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.s-eyebrow-line{width:36px;height:1px;background:var(--rust);}
+.s-eyebrow span{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,8vw,9rem);line-height:.9;letter-spacing:.03em;color:var(--ink);margin-bottom:4rem;}
+.s-title .hollow{color:transparent;-webkit-text-stroke:1.5px var(--ink);}
+
+/* WORK GRID */
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);}
+.work-card{background:var(--bone);padding:3rem;cursor:pointer;transition:background .25s;position:relative;overflow:hidden;}
+.work-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--rust);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.work-card:hover{background:var(--parch);}
+.work-card:hover::after{transform:scaleX(1);}
+.work-card:hover .wc-arrow{transform:translate(4px,-4px);color:var(--rust);}
+.wc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;}
+.wc-num{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.2em;color:var(--warm);}
+.wc-arrow{font-size:1.1rem;color:var(--warm);transition:all .25s;}
+.wc-img{width:100%;aspect-ratio:16/9;background:var(--parch);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:1.75rem;position:relative;overflow:hidden;}
+.wc-img svg{opacity:.2;}
+.wc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+.wc-upload-btn{position:absolute;bottom:.75rem;right:.75rem;background:var(--ink);color:var(--bone);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .8rem;border:none;cursor:pointer;font-family:'Familjen Grotesk',sans-serif;opacity:0;transition:opacity .2s;}
+.work-card:hover .wc-upload-btn{opacity:1;}
+.wc-upload-btn:hover{background:var(--rust);}
+.wc-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;color:var(--ink);margin-bottom:.6rem;line-height:1;}
+.wc-desc{font-size:.82rem;color:var(--ghost);line-height:1.7;margin-bottom:1.25rem;}
+.wc-chips{display:flex;flex-wrap:wrap;gap:.4rem;}
+.wc-chip{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);color:var(--ghost);padding:.2rem .65rem;}
+
+/* MODAL */
+.modal-wrap{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-wrap.open{opacity:1;pointer-events:all;}
+.modal-bg{position:absolute;inset:0;background:rgba(26,18,8,.75);backdrop-filter:blur(4px);}
+.modal-box{position:relative;background:var(--bone);width:100%;max-width:820px;max-height:86vh;overflow-y:auto;transform:translateY(24px);transition:transform .35s ease;}
+.modal-wrap.open .modal-box{transform:translateY(0);}
+.modal-hero{width:100%;aspect-ratio:16/9;background:var(--parch);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.modal-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+.modal-ph{display:flex;flex-direction:column;align-items:center;gap:.75rem;}
+.modal-ph svg{opacity:.2;}
+.modal-ph span{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ghost);}
+.modal-upload{position:absolute;bottom:1rem;right:1rem;background:var(--ink);color:var(--bone);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.5rem 1.1rem;border:none;cursor:pointer;font-family:'Familjen Grotesk',sans-serif;transition:background .2s;}
+.modal-upload:hover{background:var(--rust);}
+.modal-body{padding:3rem;}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;}
+.modal-num{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.2em;color:var(--warm);}
+.modal-close{background:none;border:1px solid var(--line);color:var(--ash);font-size:.75rem;padding:.4rem .9rem;cursor:pointer;font-family:'Familjen Grotesk',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;}
+.modal-close:hover{background:var(--ink);color:var(--bone);border-color:var(--ink);}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:.05em;color:var(--ink);line-height:1;margin-bottom:1.25rem;}
+.modal-desc{font-size:.88rem;line-height:1.8;color:var(--ash);margin-bottom:2rem;}
+.modal-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:2rem;}
+.modal-hl-label{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.9rem;}
+.modal-hls{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.modal-hls li{font-size:.85rem;color:var(--ash);line-height:1.65;padding-left:1.2rem;position:relative;}
+.modal-hls li::before{content:'';position:absolute;left:0;top:.65em;width:6px;height:1px;background:var(--rust);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:start;}
+.about-body p{font-size:1rem;line-height:1.75;color:var(--ash);margin-bottom:1.25rem;}
+.about-body strong{color:var(--ink);font-weight:700;}
+.stats-stack{border:1px solid var(--line);margin-top:2.5rem;}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:1.6rem 1.75rem;border-bottom:1px solid var(--line);}
+.stat-row:last-child{border-bottom:none;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--rust);line-height:1;}
+.stat-l{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ghost);}
+
+/* SKILLS */
+.skills-section{background:var(--ink);}
+.skills-section .s-title{color:var(--bone);}
+.skills-section .s-title .hollow{-webkit-text-stroke:1.5px var(--bone);}
+.skills-section .s-eyebrow span{color:var(--ember);}
+.skills-section .s-eyebrow-line{background:var(--ember);}
+.skills-cols{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #2e2010;}
+.skill-col{padding:2.5rem;border-right:1px solid #2e2010;}
+.skill-col:last-child{border-right:none;}
+.skill-col-title{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin-bottom:1.5rem;}
+.skill-list{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.skill-list li{font-size:.82rem;color:var(--warm);padding-left:1rem;position:relative;}
+.skill-list li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:1px;background:var(--ember);}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;}
+.exp-item{display:grid;grid-template-columns:220px 1fr;gap:4vw;padding:3rem 0;border-top:1px solid var(--line);}
+.exp-item:last-child{border-bottom:1px solid var(--line);}
+.exp-period{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ghost);margin-bottom:.5rem;}
+.exp-co{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.1em;color:var(--rust);}
+.exp-role{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;color:var(--ink);margin-bottom:.75rem;line-height:1;}
+.exp-detail{font-size:.83rem;line-height:1.75;color:var(--ash);}
+
+/* CONTACT */
+.contact-section{background:var(--ink);padding:8rem 4vw;}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:8vw;}
+.contact-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+.contact-eyebrow-line{width:36px;height:1px;background:var(--ember);}
+.contact-eyebrow span{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);}
+.contact-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,8rem);line-height:.9;letter-spacing:.03em;color:var(--bone);margin-bottom:1.5rem;}
+.contact-title .hollow{color:transparent;-webkit-text-stroke:1.5px var(--bone);}
+.contact-blurb{font-size:.95rem;color:var(--warm);line-height:1.75;margin-bottom:2.5rem;}
+.contact-links{display:flex;flex-direction:column;gap:1rem;}
+.c-link-row{display:flex;flex-direction:column;gap:.1rem;}
+.c-link-label{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);opacity:.7;}
+.c-link-row a{font-size:.9rem;color:var(--bone);text-decoration:none;transition:color .2s;}
+.c-link-row a:hover{color:var(--ember);}
+.form{display:flex;flex-direction:column;gap:1.1rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fld{display:flex;flex-direction:column;gap:.35rem;}
+.flabel{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(203,191,168,.55);}
+.finput,.fselect,.ftextarea{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--bone);padding:.85rem 1rem;font-family:'Familjen Grotesk',sans-serif;font-size:.85rem;outline:none;width:100%;appearance:none;transition:border-color .2s;}
+.finput::placeholder,.ftextarea::placeholder{color:rgba(203,191,168,.3);}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:rgba(196,122,58,.6);}
+.ftextarea{resize:vertical;min-height:110px;}
+.fselect option{background:#1a1208;color:var(--bone);}
+.fsubmit{background:var(--ember);color:var(--ink);border:none;padding:.95rem 2.2rem;font-family:'Familjen Grotesk',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;align-self:flex-start;transition:background .2s;}
+.fsubmit:hover{background:var(--rust);color:var(--bone);}
+.form-ok{font-size:.78rem;color:var(--ember);opacity:0;transition:opacity .3s;font-weight:500;margin-top:.25rem;}
+
+
+/* PROCESS */
+.process-section{background:var(--bone);}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);}
+.process-step{padding:2.5rem;border-right:1px solid var(--line);position:relative;}
+.process-step:last-child{border-right:none;}
+.process-step::after{content:'→';position:absolute;right:-1rem;top:2.5rem;font-size:1.2rem;color:var(--line);z-index:1;background:var(--bone);padding:.1rem .2rem;}
+.process-step:last-child::after{display:none;}
+.process-n{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--line);line-height:1;margin-bottom:1rem;}
+.process-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.08em;color:var(--ink);margin-bottom:.75rem;}
+.process-desc{font-size:.8rem;color:var(--ghost);line-height:1.7;}
+
+/* FOOTER */
+footer{background:var(--ink);border-top:1px solid #2a1f10;padding:2rem 4vw;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#3d3020;}
+footer a{color:#4a3a22;text-decoration:none;transition:color .2s;}
+footer a:hover{color:var(--ember);}
+
+/* ANIMATIONS */
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-right a:not(.nav-cta){display:none;}
+  .hero{padding:0 6vw 4rem;}
+  .hero-bottom{grid-template-columns:1fr;gap:2rem;}
+  .hero-meta{align-items:flex-start;}
+  .hero-tags{justify-content:flex-start;}
+  .hero-num{display:none;}
+  .work-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .skills-cols{grid-template-columns:1fr 1fr;}
+  .skill-col:nth-child(2n){border-right:none;}
+  .skill-col{border-bottom:1px solid #2e2010;}
+  .skill-col:last-child{border-bottom:none;}
+  .exp-item{grid-template-columns:1fr;gap:.75rem;}
+  .contact-inner{grid-template-columns:1fr;gap:3rem;}
+  .form-row{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;}
+  .clients-row{gap:2rem;}
+  .process-grid{grid-template-columns:1fr 1fr;}
+  .process-step:nth-child(2n){border-right:none;}
+  .process-step{border-bottom:1px solid var(--line);}
+  .process-step:nth-last-child(-n+2){border-bottom:none;}
+  .process-step::after{display:none;}
+  section{padding:5rem 6vw;}
+  .contact-section{padding:5rem 6vw;}
+  .s-title{margin-bottom:2.5rem;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:clamp(3.5rem,16vw,6rem);}
+  .skills-cols{grid-template-columns:1fr;}
+  .skill-col{border-right:none!important;}
+  .process-grid{grid-template-columns:1fr;}
+  .process-step{border-right:none!important;border-bottom:1px solid var(--line)!important;}
+  .process-step:last-child{border-bottom:none!important;}
+  .hero-btns{flex-direction:column;}
+  .btn-fill,.btn-stroke{text-align:center;}
+  .s-title{font-size:clamp(2.8rem,12vw,5rem);}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-mark">KM Studio</div>
+  <div class="nav-right">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#process">Process</a>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-num">K</div>
+  <div class="hero-top">
+    <div class="hero-kicker">
+      <div class="hero-kicker-line"></div>
+      <span>Full Stack Developer &nbsp;·&nbsp; Johannesburg &nbsp;·&nbsp; Open for work</span>
+    </div>
+    <h1 class="hero-title">
+      <div>From</div>
+      <div class="line2">Soweto</div>
+      <div class="line3">to Scale.</div>
+    </h1>
+  </div>
+  <div class="hero-bottom">
+    <p class="hero-desc">WeThinkCode_ graduate. Absa-trained. Now building for founders.<br/><br/>I'm Karabo — a full stack developer from Johannesburg who turned a passion for code into <strong>enterprise-grade software</strong> used by thousands. Now I bring that same standard to startups and entrepreneurs who refuse to settle for slow.</p>
+    <div class="hero-meta">
+      <div class="hero-tags">
+        <span class="hero-tag">Java EE</span><span class="hero-tag">Spring Boot</span>
+        <span class="hero-tag">Angular</span><span class="hero-tag">Node.js</span>
+        <span class="hero-tag">React Native</span><span class="hero-tag">PostgreSQL</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#work" class="btn-fill">View Work</a>
+        <a href="#contact" class="btn-stroke">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Full Stack Development <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">API Architecture <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mobile Applications <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">System Design <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">CI/CD Pipelines <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Database Engineering <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">UX Implementation <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Cloud Infrastructure <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Full Stack Development <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">API Architecture <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mobile Applications <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">System Design <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">CI/CD Pipelines <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Database Engineering <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">UX Implementation <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Cloud Infrastructure <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- CLIENT STRIP -->
+<div class="clients">
+  <div class="clients-label">Trusted by teams at</div>
+  <div class="clients-row">
+    <div class="client-logo">
+      <div class="client-logo-name">ABSA</div>
+      <div class="client-logo-sub">Banking</div>
+    </div>
+    <div class="client-logo">
+      <div class="client-logo-name">SPAR</div>
+      <div class="client-logo-sub">Retail</div>
+    </div>
+    <div class="client-logo">
+      <div class="client-logo-name">Anglo American</div>
+      <div class="client-logo-sub">Mining</div>
+    </div>
+    <div class="client-logo">
+      <div class="client-logo-name">27Four</div>
+      <div class="client-logo-sub">Investment</div>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span>Selected Work</span></div>
+  <h2 class="s-title">What I've<br/><span class="hollow">Built.</span></h2>
+  <div class="work-grid">
+
+    <div class="work-card" onclick="openModal(0)">
+      <div class="wc-top"><span class="wc-num">01</span><span class="wc-arrow">↗</span></div>
+      <div class="wc-img" id="wcImg0">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#9c5a2d" stroke-width="1.2"/><circle cx="16" cy="18" r="4" stroke="#9c5a2d" stroke-width="1"/><path d="M4 32L14 22L22 30L30 20L44 34" stroke="#9c5a2d" stroke-width="1.2" fill="none"/></svg>
+        <img id="wcImgEl0" src="" alt=""/>
+        <button class="wc-upload-btn" onclick="event.stopPropagation();document.getElementById('wcFile0').click()">+ Image</button>
+        <input type="file" id="wcFile0" style="display:none" accept="image/*" onchange="uploadCard(event,0)"/>
+      </div>
+      <div class="wc-name">Zamanguni Platform</div>
+      <p class="wc-desc">Centralised quote management for multi-department businesses. Automated pricing, workflows &amp; document generation.</p>
+      <div class="wc-chips"><span class="wc-chip">Node.js</span><span class="wc-chip">Express</span><span class="wc-chip">MySQL</span><span class="wc-chip">Tailwind</span></div>
+    </div>
+
+    <div class="work-card" onclick="openModal(1)">
+      <div class="wc-top"><span class="wc-num">02</span><span class="wc-arrow">↗</span></div>
+      <div class="wc-img" id="wcImg1">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#9c5a2d" stroke-width="1.2"/><circle cx="16" cy="18" r="4" stroke="#9c5a2d" stroke-width="1"/><path d="M4 32L14 22L22 30L30 20L44 34" stroke="#9c5a2d" stroke-width="1.2" fill="none"/></svg>
+        <img id="wcImgEl1" src="" alt=""/>
+        <button class="wc-upload-btn" onclick="event.stopPropagation();document.getElementById('wcFile1').click()">+ Image</button>
+        <input type="file" id="wcFile1" style="display:none" accept="image/*" onchange="uploadCard(event,1)"/>
+      </div>
+      <div class="wc-name">EDC Digital System</div>
+      <p class="wc-desc">Full digital management for early learning centres — attendance, records, dashboards built for non-technical staff.</p>
+      <div class="wc-chips"><span class="wc-chip">Angular</span><span class="wc-chip">Firebase</span><span class="wc-chip">JavaScript</span></div>
+    </div>
+
+    <div class="work-card" onclick="openModal(2)">
+      <div class="wc-top"><span class="wc-num">03</span><span class="wc-arrow">↗</span></div>
+      <div class="wc-img" id="wcImg2">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#9c5a2d" stroke-width="1.2"/><circle cx="16" cy="18" r="4" stroke="#9c5a2d" stroke-width="1"/><path d="M4 32L14 22L22 30L30 20L44 34" stroke="#9c5a2d" stroke-width="1.2" fill="none"/></svg>
+        <img id="wcImgEl2" src="" alt=""/>
+        <button class="wc-upload-btn" onclick="event.stopPropagation();document.getElementById('wcFile2').click()">+ Image</button>
+        <input type="file" id="wcFile2" style="display:none" accept="image/*" onchange="uploadCard(event,2)"/>
+      </div>
+      <div class="wc-name">SME Financial Tracker</div>
+      <p class="wc-desc">Business financial tracking with income/expense analytics, real-time reporting and data export for small businesses.</p>
+      <div class="wc-chips"><span class="wc-chip">Spring Boot</span><span class="wc-chip">PostgreSQL</span><span class="wc-chip">Chart.js</span></div>
+    </div>
+
+    <div class="work-card" onclick="openModal(3)">
+      <div class="wc-top"><span class="wc-num">04</span><span class="wc-arrow">↗</span></div>
+      <div class="wc-img" id="wcImg3">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="2" stroke="#9c5a2d" stroke-width="1.2"/><circle cx="16" cy="18" r="4" stroke="#9c5a2d" stroke-width="1"/><path d="M4 32L14 22L22 30L30 20L44 34" stroke="#9c5a2d" stroke-width="1.2" fill="none"/></svg>
+        <img id="wcImgEl3" src="" alt=""/>
+        <button class="wc-upload-btn" onclick="event.stopPropagation();document.getElementById('wcFile3').click()">+ Image</button>
+        <input type="file" id="wcFile3" style="display:none" accept="image/*" onchange="uploadCard(event,3)"/>
+      </div>
+      <div class="wc-name">Transit Booking System</div>
+      <p class="wc-desc">Scalable booking &amp; routing platform for independent operators. Route optimisation, real-time maps, secure auth.</p>
+      <div class="wc-chips"><span class="wc-chip">React Native</span><span class="wc-chip">Node.js</span><span class="wc-chip">MongoDB</span><span class="wc-chip">Maps API</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--parch);">
+  <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span>The Developer</span></div>
+  <div class="about-grid">
+    <div>
+      <h2 class="s-title">Built<br/><span class="hollow">Different.</span></h2>
+    </div>
+    <div>
+      <div class="about-body">
+        <p>I'm Karabo Mohodi — a full stack developer based in Johannesburg with <strong>three years of experience building software that scales.</strong> I've worked inside enterprise teams at Absa Bank and Moyo Business Advisory, shipping production systems used by thousands.</p>
+        <p>Now I work independently, partnering with <strong>startups and entrepreneurs</strong> who need a developer who doesn't just write code — but thinks about the product, the user, and the business outcome behind every line.</p>
+        <p>I speak <strong>English and Sepedi</strong>, understand the South African market deeply, and I build things that work in the real world — not just on localhost.</p>
+      </div>
+      <div class="stats-stack">
+        <div class="stat-row"><span class="stat-n">3+</span><span class="stat-l">Years shipping software</span></div>
+        <div class="stat-row"><span class="stat-n">8+</span><span class="stat-l">Projects delivered</span></div>
+        <div class="stat-row"><span class="stat-n">4</span><span class="stat-l">Enterprise clients</span></div>
+        <div class="stat-row"><span class="stat-n">2</span><span class="stat-l">Languages spoken</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span>Technical Arsenal</span></div>
+  <h2 class="s-title">The<br/><span class="hollow">Stack.</span></h2>
+  <div class="skills-cols">
+    <div class="skill-col">
+      <div class="skill-col-title">Backend</div>
+      <ul class="skill-list">
+        <li>Java EE</li><li>Spring Boot</li><li>Spring MVC</li>
+        <li>Hibernate ORM</li><li>Node.js</li><li>Express</li>
+        <li>REST / SOAP</li><li>Kafka</li><li>Microservices</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Frontend</div>
+      <ul class="skill-list">
+        <li>Angular</li><li>React Native</li><li>TypeScript</li>
+        <li>HTML5 / CSS3</li><li>Tailwind CSS</li>
+        <li>Bootstrap</li><li>Chart.js</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Data &amp; Cloud</div>
+      <ul class="skill-list">
+        <li>PostgreSQL</li><li>Oracle SQL</li><li>MySQL</li>
+        <li>MongoDB</li><li>Firebase</li><li>Redis</li>
+        <li>Azure</li><li>Power BI</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">DevOps</div>
+      <ul class="skill-list">
+        <li>Jenkins</li><li>Docker</li><li>Git / GitHub</li>
+        <li>Maven / Gradle</li><li>CI/CD Pipelines</li>
+        <li>Figma</li><li>Apache POI</li><li>Linux (Ubuntu)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span>Experience</span></div>
+  <h2 class="s-title">Where I've<br/><span class="hollow">Worked.</span></h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Feb 2025 — Present</div>
+        <div class="exp-co">Independent</div>
+      </div>
+      <div>
+        <div class="exp-role">Freelance Software Developer</div>
+        <p class="exp-detail">Building end-to-end digital products for SMEs and entrepreneurs. A multi-department quote platform, digital school management system, financial tracker, and a transit booking app — all shipped solo, end to end.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Jul 2023 — Sep 2024</div>
+        <div class="exp-co">Moyo Business Advisory</div>
+      </div>
+      <div>
+        <div class="exp-role">Software Consultant</div>
+        <p class="exp-detail">Delivered across SPAR, 27Four, Absa, and Anglo American. MDM dashboards in Power BI, Redis caching that cut API response times, automated Excel/Word report generation, and UX improvements across enterprise platforms.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Jan 2023 — May 2023</div>
+        <div class="exp-co">Absa Bank Limited</div>
+      </div>
+      <div>
+        <div class="exp-role">Full Stack Software Engineer</div>
+        <p class="exp-detail">Absa Merchant Access Online. Monitored system health with Gravitee and Instana, resolved production incidents, and built features using Java EE, Angular, and Kafka. Maintained Jenkins CI/CD pipelines.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Jan 2019 — Apr 2020</div>
+        <div class="exp-co">Intellectual Properties</div>
+      </div>
+      <div>
+        <div class="exp-role">IT Technician</div>
+        <p class="exp-detail">Maintained the company website and provided on-site IT support at events. Hardware and software configuration and management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="process-section" id="process">
+  <div class="s-eyebrow"><div class="s-eyebrow-line"></div><span>How I Work</span></div>
+  <h2 class="s-title">The<br/><span class="hollow">Process.</span></h2>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="process-n">01</div>
+      <div class="process-name">Discovery</div>
+      <p class="process-desc">We talk. I listen properly — your problem, your users, your constraints. No assumptions. I ask the uncomfortable questions so we build the right thing, not just any thing.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-n">02</div>
+      <div class="process-name">Blueprint</div>
+      <p class="process-desc">Before a single line of code I map out the architecture, data model, and user flows. You get a clear picture of exactly what we're building and why — no surprises mid-build.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-n">03</div>
+      <div class="process-name">Build</div>
+      <p class="process-desc">I build in focused sprints with regular check-ins. You see real progress every week, not just a black box that opens in 3 months. Clean code, tested, documented.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-n">04</div>
+      <div class="process-name">Handoff</div>
+      <p class="process-desc">Deployed, documented, and handed over properly. I don't disappear — I stick around for the first 30 days to make sure everything runs smoothly in the wild.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="contact-eyebrow"><div class="contact-eyebrow-line"></div><span>Get In Touch</span></div>
+      <div class="contact-title">Let's<br/><span class="hollow">Build.</span></div>
+      <p class="contact-blurb">Open to freelance projects — especially founders with a real problem who want to move fast. If that's you, let's talk.</p>
+      <div class="contact-links">
+        <div class="c-link-row"><span class="c-link-label">Email</span><a href="/cdn-cgi/l/email-protection#9ef3f1f6f1faf7b0f5ffecfffcf1def9f3fff7f2b0fdf1f3"><span class="__cf_email__" data-cfemail="caa7a5a2a5aea3e4a1abb8aba8a58aada7aba3a6e4a9a5a7">[email&#160;protected]</span></a></div>
+        <div class="c-link-row"><span class="c-link-label">Phone</span><a href="tel:0638863894">063 886 3894</a></div>
+        <div class="c-link-row"><span class="c-link-label">GitHub</span><a href="https://github.com/UserL200" target="_blank">github.com/UserL200</a></div>
+        <div class="c-link-row"><span class="c-link-label">LinkedIn</span><a href="https://www.linkedin.com/in/karabo-mohodi" target="_blank">linkedin.com/in/karabo-mohodi</a></div>
+      </div>
+    </div>
+    <form class="form" id="contactForm">
+      <div class="form-row">
+        <div class="fld"><label class="flabel">Name</label><input class="finput" id="fname" type="text" placeholder="Your name" required/></div>
+        <div class="fld"><label class="flabel">Email</label><input class="finput" id="femail" type="email" placeholder="you@company.com" required/></div>
+      </div>
+      <div class="fld">
+        <label class="flabel">Project type</label>
+        <select class="fselect finput" id="ftype">
+          <option value="">Select...</option>
+          <option>Web Application</option>
+          <option>Mobile App</option>
+          <option>API / Backend System</option>
+          <option>Dashboard / Analytics</option>
+          <option>MVP Build</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="fld"><label class="flabel">Tell me more</label><textarea class="ftextarea" id="fmessage" placeholder="What are you building? What problem does it solve?" required></textarea></div>
+      <button class="fsubmit" type="button" onclick="sendToWhatsApp()">Send Message</button>
+      <p class="form-ok" id="form-ok">Opening WhatsApp — see you there!</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Karabo Mohodi</span>
+  <span>Johannesburg, South Africa</span>
+  <span><a href="/cdn-cgi/l/email-protection#204d4f484f44490e4b415241424f60474d41494c0e434f4d"><span class="__cf_email__" data-cfemail="80edefe8efe4e9aeebe1f2e1e2efc0e7ede1e9ecaee3efed">[email&#160;protected]</span></a></span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-wrap" id="modalWrap">
+  <div class="modal-bg" onclick="closeModal()"></div>
+  <div class="modal-box">
+    <div class="modal-hero">
+      <div class="modal-ph" id="mPh">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><rect x="4" y="4" width="48" height="48" rx="2" stroke="#9c5a2d" stroke-width="1.2"/><circle cx="19" cy="20" r="5" stroke="#9c5a2d" stroke-width="1"/><path d="M4 40L18 26L27 35L37 23L52 42" stroke="#9c5a2d" stroke-width="1.2" fill="none"/></svg>
+        <span>Upload a project image</span>
+      </div>
+      <img id="mImg" src="" alt=""/>
+      <button class="modal-upload" onclick="document.getElementById('mFile').click()">+ Upload Image</button>
+      <input type="file" id="mFile" style="display:none" accept="image/*" onchange="uploadModal(event)"/>
+    </div>
+    <div class="modal-body">
+      <div class="modal-head">
+        <span class="modal-num" id="mNum"></span>
+        <button class="modal-close" onclick="closeModal()">Close ✕</button>
+      </div>
+      <div class="modal-title" id="mTitle"></div>
+      <p class="modal-desc" id="mDesc"></p>
+      <div class="modal-chips" id="mChips"></div>
+      <div class="modal-hl-label">Key Highlights</div>
+      <ul class="modal-hls" id="mHls"></ul>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var projects = [
+  {
+    num:'01', title:'Zamanguni — Quote Management Platform',
+    desc:'A centralised quotation management system built to support multiple departments simultaneously. The platform replaced slow manual processes with automated pricing logic, configurable approval workflows, and instant document generation.',
+    chips:['Node.js','Express','MySQL','REST API','Tailwind CSS'],
+    hls:['Sole developer — designed and built end-to-end','Automated pricing logic with per-department configuration','Approval workflow with email notifications at each stage','Dynamic PDF/Word document generation on quote approval'],
+    img:null
+  },
+  {
+    num:'02', title:'Early Development Centre — Digital System',
+    desc:'A digital management platform for an early learning centre. Handles daily attendance, student records, parent communication, and admin dashboards. Built to be usable by non-technical staff with zero training required.',
+    chips:['Angular','Firebase','HTML5','CSS3','JavaScript'],
+    hls:['Responsive dashboards tested on tablets and low-end devices','Real-time attendance tracking synced via Firebase','Student record management with communication logs','Role-based access for teachers, admins, and parents'],
+    img:null
+  },
+  {
+    num:'03', title:'SME Financial Tracker',
+    desc:'A financial tracking platform giving small businesses and individuals a clear view of their money. Income/expense analytics, real-time dashboards, and data export — accessible financial clarity without needing an accountant.',
+    chips:['Spring Boot','PostgreSQL','Chart.js','Figma'],
+    hls:['Income/expense categorisation with custom tags','Interactive Chart.js dashboards with date-range filtering','CSV and PDF export for reporting and accounting','Designed end-to-end in Figma before development'],
+    img:null
+  },
+  {
+    num:'04', title:'Transit Booking System',
+    desc:'Scalable booking and routing platform for independent transit operators. Customers can search routes, book trips, and track journeys in real time. Route optimisation, JWT authentication, and Google Maps integration built in from day one.',
+    chips:['React Native','Node.js','MongoDB','Google Maps API','JWT'],
+    hls:['Cross-platform mobile app built in React Native','Route optimisation for independent transit operators','JWT-secured auth with role-based access control','Google Maps API for real-time route visualisation'],
+    img:null
+  }
+];
+
+var current = 0;
+
+function openModal(i) {
+  current = i;
+  var p = projects[i];
+  document.getElementById('mNum').textContent = p.num;
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mDesc').textContent = p.desc;
+  document.getElementById('mChips').innerHTML = p.chips.map(function(c){ return '<span class="wc-chip">'+c+'</span>'; }).join('');
+  document.getElementById('mHls').innerHTML = p.hls.map(function(h){ return '<li>'+h+'</li>'; }).join('');
+  var img = document.getElementById('mImg');
+  var ph = document.getElementById('mPh');
+  if (p.img) { img.src = p.img; img.style.display = 'block'; ph.style.display = 'none'; }
+  else { img.style.display = 'none'; ph.style.display = 'flex'; }
+  document.getElementById('modalWrap').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalWrap').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+function uploadModal(e) {
+  var f = e.target.files[0]; if (!f) return;
+  var r = new FileReader();
+  r.onload = function(ev) {
+    projects[current].img = ev.target.result;
+    var img = document.getElementById('mImg');
+    img.src = ev.target.result; img.style.display = 'block';
+    document.getElementById('mPh').style.display = 'none';
+    var ci = document.getElementById('wcImgEl'+current);
+    if (ci) { ci.src = ev.target.result; ci.style.display = 'block'; }
+  };
+  r.readAsDataURL(f);
+  e.target.value = '';
+}
+
+function uploadCard(e, i) {
+  e.stopPropagation();
+  var f = e.target.files[0]; if (!f) return;
+  var r = new FileReader();
+  r.onload = function(ev) {
+    projects[i].img = ev.target.result;
+    var ci = document.getElementById('wcImgEl'+i);
+    if (ci) { ci.src = ev.target.result; ci.style.display = 'block'; }
+  };
+  r.readAsDataURL(f);
+  e.target.value = '';
+}
+
+function sendToWhatsApp() {
+  var name    = document.getElementById('fname').value.trim();
+  var email   = document.getElementById('femail').value.trim();
+  var type    = document.getElementById('ftype').value || 'Not specified';
+  var message = document.getElementById('fmessage').value.trim();
+
+  if (!name || !email || !message) {
+    alert('Please fill in your name, email and message.');
+    return;
+  }
+
+  var text = 'Hi Karabo! I found you through your portfolio.\n\n'
+    + 'Name: ' + name + '\n'
+    + 'Email: ' + email + '\n'
+    + 'Project Type: ' + type + '\n\n'
+    + 'Message:\n' + message;
+
+  var url = 'https://wa.me/27638863894?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+
+  var ok = document.getElementById('form-ok');
+  ok.style.opacity = '1';
+  document.getElementById('contactForm').reset();
+  setTimeout(function(){ ok.style.opacity = '0'; }, 5000);
+}
+</script>
+</body>
+</html>
